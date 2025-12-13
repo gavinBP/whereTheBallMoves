@@ -103,21 +103,21 @@ Update the file after completing each sub-task, not just after completing an ent
   - [x] 2.17 Write unit tests for track reconstruction algorithm
   - [x] 2.18 Write unit tests for WindBorne API service
 
-- [ ] 3.0 Open-Meteo integration and wind data correlation
-  - [ ] 3.1 Create TypeScript types for wind data (`src/types/wind.ts`)
-  - [ ] 3.2 Create Open-Meteo API service (`src/services/openMeteoApi.ts`)
-  - [ ] 3.3 Implement altitude to pressure level mapping utility (`src/utils/altitudeMapping.ts`)
-  - [ ] 3.4 Create mapping function: altitude (km) → pressure level (hPa) for Open-Meteo queries
-  - [ ] 3.5 Implement function to fetch wind data for a specific location and pressure level
-  - [ ] 3.6 Implement function to fetch historical wind data (past 24 hours) for a location
-  - [ ] 3.7 Add wind data caching mechanism to reduce redundant API calls
-  - [ ] 3.8 Create function to correlate wind vectors with balloon positions at corresponding timestamps
-  - [ ] 3.9 Implement 1-hour nowcast prediction logic (`src/utils/nowcast.ts`)
-  - [ ] 3.10 Calculate predicted position using current wind vector at balloon's altitude
-  - [ ] 3.11 Add uncertainty calculation for nowcast (based on wind variability if available)
-  - [ ] 3.12 Write unit tests for altitude mapping utility
-  - [ ] 3.13 Write unit tests for Open-Meteo API service
-  - [ ] 3.14 Write unit tests for nowcast prediction logic
+- [x] 3.0 Open-Meteo integration and wind data correlation
+  - [x] 3.1 Create TypeScript types for wind data (`src/types/wind.ts`)
+  - [x] 3.2 Create Open-Meteo API service (`src/services/openMeteoApi.ts`)
+  - [x] 3.3 Implement altitude to pressure level mapping utility (`src/utils/altitudeMapping.ts`)
+  - [x] 3.4 Create mapping function: altitude (km) → pressure level (hPa) for Open-Meteo queries
+  - [x] 3.5 Implement function to fetch wind data for a specific location and pressure level
+  - [x] 3.6 Implement function to fetch historical wind data (past 24 hours) for a location
+  - [x] 3.7 Add wind data caching mechanism to reduce redundant API calls
+  - [x] 3.8 Create function to correlate wind vectors with balloon positions at corresponding timestamps
+  - [x] 3.9 Implement 1-hour nowcast prediction logic (`src/utils/nowcast.ts`)
+  - [x] 3.10 Calculate predicted position using current wind vector at balloon's altitude
+  - [x] 3.11 Add uncertainty calculation for nowcast (based on wind variability if available)
+  - [x] 3.12 Write unit tests for altitude mapping utility
+  - [x] 3.13 Write unit tests for Open-Meteo API service
+  - [x] 3.14 Write unit tests for nowcast prediction logic
 
 - [ ] 4.0 Map visualization and user interface
   - [ ] 4.1 Set up map library and create base MapView component (`src/components/Map/MapView.tsx`)
