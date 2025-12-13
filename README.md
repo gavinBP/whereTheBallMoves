@@ -80,7 +80,62 @@ src/
 
 ## Deployment
 
-This application is designed to be deployed to platforms like Vercel or Netlify. The build output is in the `dist` directory.
+This application is configured for deployment on **Vercel**. The build output is in the `dist` directory.
+
+### Deploying to Vercel
+
+#### Option 1: Deploy via Vercel CLI (Recommended)
+
+1. Install Vercel CLI globally:
+```bash
+npm i -g vercel
+```
+
+2. Login to Vercel:
+```bash
+vercel login
+```
+
+3. Deploy from the project root:
+```bash
+vercel
+```
+
+4. Follow the prompts to link your project and deploy.
+
+#### Option 2: Deploy via GitHub Integration
+
+1. Push your code to GitHub (if not already done):
+```bash
+git push origin deployment-and-finalization
+```
+
+2. Go to [vercel.com](https://vercel.com) and sign in with your GitHub account.
+
+3. Click "Add New Project" and import your repository.
+
+4. Vercel will automatically detect the Vite configuration:
+   - **Framework Preset**: Vite
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+
+5. Click "Deploy" and wait for the deployment to complete.
+
+6. Your application will be available at a URL like: `https://where-the-ball-moves.vercel.app`
+
+### Configuration
+
+The `vercel.json` file is already configured with:
+- API rewrites to proxy WindBorne API requests (handles CORS)
+- Proper build and output settings
+- CORS headers for API endpoints
+
+### Post-Deployment
+
+After deployment, update the task list and README with your deployment URL.
+
+**Note**: The application uses Vercel's rewrites feature to proxy API calls to the WindBorne API, which handles CORS issues in production.
 
 ## License
 

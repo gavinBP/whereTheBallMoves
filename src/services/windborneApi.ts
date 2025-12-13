@@ -9,19 +9,15 @@ import type {
 
 // Base URL for WindBorne API
 // In development (browser with localhost), Vite proxy handles CORS via /api/windborne
-// In tests/production, use direct URL (will need CORS solution for production)
-// TODO: For production deployment, either:
-//   1. Use a backend proxy
-//   2. Or configure the API to allow CORS
-//   3. Or use a CORS proxy service
-// Check if we're in a real browser (not jsdom test environment)
-const isRealBrowser = typeof window !== 'undefined' && 
-  window.location.hostname === 'localhost' &&
-  !(window.navigator?.userAgent?.includes('jsdom') ?? false);
+// In production (Vercel), rewrites in vercel.json handle CORS via /api/windborne
+// In tests, use direct URL (tests run in Node.js, not browser)
+// Check if we're in test environment (Node.js with jsdom)
+const isTest = typeof window === 'undefined' || 
+  (window.navigator?.userAgent?.includes('jsdom') ?? false);
 
-const WINDBORNE_BASE_URL = isRealBrowser
-  ? '/api/windborne'  // Use proxy in local dev browser
-  : 'https://a.windbornesystems.com/treasure';  // Direct URL for tests/production
+const WINDBORNE_BASE_URL = isTest
+  ? 'https://a.windbornesystems.com/treasure'  // Direct URL for tests
+  : '/api/windborne';  // Use proxy in browser (dev and production via Vercel rewrites)
 
 /**
  * Parse a raw position array into a structured object

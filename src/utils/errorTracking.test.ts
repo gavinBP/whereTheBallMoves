@@ -1,5 +1,5 @@
 import { ErrorTracker } from './errorTracking';
-import type { BalloonDataCollection, BalloonDataResult } from '../types/balloon';
+import type { BalloonDataCollection } from '../types/balloon';
 import type { TrackReconstructionResult } from '../types/track';
 
 describe('ErrorTracker', () => {
