@@ -9,15 +9,17 @@ import { TimeSelector } from './components/Controls/TimeSelector';
 import { RefreshButton } from './components/Controls/RefreshButton';
 import { DetailsPanel } from './components/DetailsPanel/DetailsPanel';
 import { LoadingSpinner } from './components/Loading/LoadingSpinner';
+import { ErrorReportComponent } from './components/ErrorReport/ErrorReport';
 import { useBalloonData } from './hooks/useBalloonData';
 import { useWindData } from './hooks/useWindData';
+import { useAutoRefresh } from './hooks/useAutoRefresh';
 import { calculateNowcast } from './utils/nowcast';
 import type { BalloonTrack, TrackPoint } from './types/track';
 import type { WindDataPoint } from './types/wind';
 import './App.css';
 
 function App() {
-  const { data, tracks, loading, error, fetchData, refreshData } = useBalloonData();
+  const { data, tracks, loading, error, errorReport, refreshData } = useBalloonData();
   const { fetchWindForPoint, windData: windDataSeries } = useWindData();
 
   const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
@@ -28,15 +30,12 @@ function App() {
   const [mouseCoordinates, setMouseCoordinates] = useState<{ lat: number; lon: number } | null>(null);
 
   // Auto-refresh every 7 minutes
-  useEffect(() => {
-    fetchData();
-
-    const interval = setInterval(() => {
-      refreshData();
-    }, 7 * 60 * 1000); // 7 minutes
-
-    return () => clearInterval(interval);
-  }, [fetchData, refreshData]);
+  useAutoRefresh({
+    callback: refreshData,
+    intervalMs: 7 * 60 * 1000, // 7 minutes
+    enabled: true,
+    immediate: true,
+  });
 
   // Get selected track
   const selectedTrack =
@@ -121,6 +120,7 @@ function App() {
                 {mouseCoordinates.lat.toFixed(4)}°, {mouseCoordinates.lon.toFixed(4)}°
               </div>
             )}
+            {errorReport && <ErrorReportComponent errorReport={errorReport} />}
             <RefreshButton onRefresh={refreshData} disabled={loading} />
           </div>
         </div>
@@ -162,12 +162,30 @@ function App() {
           {data && (
             <div style={{ marginTop: '20px', fontSize: '12px', color: '#333333' }}>
               <p>
-                <strong>Data Status:</strong> {data.successCount} / 24 endpoints successful
+                <strong>Data Status:</strong>{' '}
+                <span
+                  style={{
+                    color: data.successCount === 24 ? '#28a745' : data.successCount > 0 ? '#ffc107' : '#dc3545',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {data.successCount} / 24 endpoints successful
+                </span>
+                {data.failureCount > 0 && (
+                  <span style={{ color: '#dc3545', marginLeft: '8px' }}>
+                    ⚠️ {data.failureCount} failed
+                  </span>
+                )}
               </p>
               <p>
                 <strong>Last Updated:</strong>{' '}
                 {data.fetchedAt.toLocaleTimeString()}
               </p>
+              {errorReport && errorReport.totalErrors > 0 && (
+                <p style={{ color: '#dc3545', marginTop: '8px' }}>
+                  <strong>⚠️ {errorReport.totalErrors} error(s) detected</strong>
+                </p>
+              )}
             </div>
           )}
         </aside>
