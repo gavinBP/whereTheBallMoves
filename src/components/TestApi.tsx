@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { fetchAllBalloonData } from '../services/windborneApi';
 import { reconstructBalloonTracks } from '../utils/trackReconstruction';
+import { fetchWindDataForAltitude } from '../services/openMeteoApi';
+import { altitudeToPressureLevel, pressureLevelToAltitude } from '../utils/altitudeMapping';
+import { calculateNowcast } from '../utils/nowcast';
+import { correlateWindWithTrack } from '../utils/windCorrelation';
 import type { BalloonDataCollection } from '../types/balloon';
 import type { TrackReconstructionResult } from '../types/track';
 
@@ -208,6 +212,243 @@ export function TestApi() {
           )}
         </div>
       )}
+
+      {/* Task 3.0 Testing Section */}
+      <div style={{ marginTop: '40px', borderTop: '3px solid #007bff', paddingTop: '20px' }}>
+        <h2 style={{ color: '#007bff', marginBottom: '20px' }}>Task 3.0: Open-Meteo Integration Test</h2>
+        
+        {/* Wind Data Fetching Test */}
+        <div style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#e7f3ff', borderRadius: '8px' }}>
+          <h3>Test Wind Data Fetching</h3>
+          <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
+            <input
+              type="number"
+              id="test-lat"
+              placeholder="Latitude (e.g., 40.7128)"
+              step="0.0001"
+              style={{ padding: '8px', width: '150px' }}
+              defaultValue="40.7128"
+            />
+            <input
+              type="number"
+              id="test-lon"
+              placeholder="Longitude (e.g., -74.006)"
+              step="0.0001"
+              style={{ padding: '8px', width: '150px' }}
+              defaultValue="-74.006"
+            />
+            <input
+              type="number"
+              id="test-alt"
+              placeholder="Altitude (km, e.g., 10)"
+              step="0.1"
+              style={{ padding: '8px', width: '120px' }}
+              defaultValue="10"
+            />
+            <button
+              onClick={async () => {
+                const lat = parseFloat((document.getElementById('test-lat') as HTMLInputElement)?.value || '40.7128');
+                const lon = parseFloat((document.getElementById('test-lon') as HTMLInputElement)?.value || '-74.006');
+                const alt = parseFloat((document.getElementById('test-alt') as HTMLInputElement)?.value || '10');
+                
+                setError(null);
+                try {
+                  const pressureLevel = altitudeToPressureLevel(alt);
+                  const result = await fetchWindDataForAltitude(lat, lon, alt);
+                  
+                  if (result.success && result.data) {
+                    alert(`Success!\n\nAltitude: ${alt} km\nPressure Level: ${pressureLevel} hPa\nWind Data Points: ${result.data.dataPoints.length}\n\nCheck console for full data.`);
+                    console.log('Wind Data Result:', result);
+                    console.log('Sample wind data:', result.data.dataPoints.slice(0, 3));
+                  } else {
+                    alert(`Failed: ${result.error || 'Unknown error'}`);
+                  }
+                } catch (err) {
+                  const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+                  setError(errorMessage);
+                  alert(`Error: ${errorMessage}`);
+                }
+              }}
+              style={{ padding: '8px 16px', cursor: 'pointer' }}
+            >
+              Fetch Wind Data
+            </button>
+          </div>
+          <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+            Enter coordinates and altitude, then click to fetch wind data from Open-Meteo API
+          </p>
+        </div>
+
+        {/* Altitude Mapping Test */}
+        <div style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#fff3cd', borderRadius: '8px' }}>
+          <h3>Test Altitude to Pressure Level Mapping</h3>
+          <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
+            <input
+              type="number"
+              id="map-alt"
+              placeholder="Altitude (km)"
+              step="0.1"
+              style={{ padding: '8px', width: '150px' }}
+              defaultValue="10"
+            />
+            <button
+              onClick={() => {
+                const alt = parseFloat((document.getElementById('map-alt') as HTMLInputElement)?.value || '10');
+                const pressureLevel = altitudeToPressureLevel(alt);
+                const backToAlt = pressureLevelToAltitude(pressureLevel);
+                alert(`Altitude: ${alt} km\n→ Pressure Level: ${pressureLevel} hPa\n→ Back to Altitude: ${backToAlt.toFixed(2)} km`);
+              }}
+              style={{ padding: '8px 16px', cursor: 'pointer' }}
+            >
+              Test Mapping
+            </button>
+          </div>
+        </div>
+
+        {/* Nowcast Test with Real Track */}
+        {tracks && tracks.tracks.length > 0 && (
+          <div style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#d1ecf1', borderRadius: '8px' }}>
+            <h3>Test Nowcast Prediction</h3>
+            <p style={{ fontSize: '14px', marginBottom: '10px' }}>
+              Select a track to test 1-hour nowcast prediction:
+            </p>
+            <select
+              id="track-select"
+              style={{ padding: '8px', width: '200px', marginBottom: '10px' }}
+            >
+              {tracks.tracks.slice(0, 10).map((track) => (
+                <option key={track.trackId} value={track.trackId}>
+                  {track.trackId} ({track.points.length} points)
+                </option>
+              ))}
+            </select>
+            <br />
+            <button
+              onClick={async () => {
+                const trackId = (document.getElementById('track-select') as HTMLSelectElement)?.value;
+                const track = tracks.tracks.find((t) => t.trackId === trackId);
+                
+                if (!track || track.points.length === 0) {
+                  alert('No track selected or track has no points');
+                  return;
+                }
+
+                const currentPoint = track.points[track.points.length - 1];
+                
+                try {
+                  // Fetch wind data for current position
+                  const windResult = await fetchWindDataForAltitude(
+                    currentPoint.latitude,
+                    currentPoint.longitude,
+                    currentPoint.altitudeKm
+                  );
+
+                  if (windResult.success && windResult.data) {
+                    const windAtTime = windResult.data.dataPoints.find(
+                      (p) => Math.abs(p.timestamp.getTime() - currentPoint.timestamp.getTime()) < 60 * 60 * 1000
+                    );
+
+                    const nowcast = calculateNowcast(track, windAtTime || null);
+                    
+                    if (nowcast) {
+                      const message = `Nowcast Prediction for ${trackId}:\n\n` +
+                        `Current Position: ${currentPoint.latitude.toFixed(4)}, ${currentPoint.longitude.toFixed(4)}\n` +
+                        `Predicted Position: ${nowcast.predictedPosition.latitude.toFixed(4)}, ${nowcast.predictedPosition.longitude.toFixed(4)}\n` +
+                        `Predicted Distance: ${nowcast.predictedDistanceKm.toFixed(2)} km\n` +
+                        `Uncertainty Radius: ${nowcast.uncertaintyRadiusKm.toFixed(2)} km\n` +
+                        `Confidence: ${(nowcast.confidence * 100).toFixed(1)}%\n` +
+                        (nowcast.windVector ? `Wind: ${nowcast.windVector.windSpeedKmh.toFixed(1)} km/h at ${nowcast.windVector.windDirectionDeg.toFixed(0)}°` : 'No wind data');
+                      
+                      alert(message);
+                      console.log('Nowcast Result:', nowcast);
+                    } else {
+                      alert('Could not calculate nowcast (insufficient data)');
+                    }
+                  } else {
+                    alert(`Failed to fetch wind data: ${windResult.error || 'Unknown error'}`);
+                  }
+                } catch (err) {
+                  const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+                  alert(`Error: ${errorMessage}`);
+                  console.error('Nowcast error:', err);
+                }
+              }}
+              style={{ padding: '8px 16px', cursor: 'pointer' }}
+            >
+              Calculate Nowcast
+            </button>
+          </div>
+        )}
+
+        {/* Wind Correlation Test */}
+        {tracks && tracks.tracks.length > 0 && (
+          <div style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#f8d7da', borderRadius: '8px' }}>
+            <h3>Test Wind Correlation</h3>
+            <p style={{ fontSize: '14px', marginBottom: '10px' }}>
+              Select a track to correlate with wind data:
+            </p>
+            <select
+              id="correlate-track-select"
+              style={{ padding: '8px', width: '200px', marginBottom: '10px' }}
+            >
+              {tracks.tracks.slice(0, 10).map((track) => (
+                <option key={track.trackId} value={track.trackId}>
+                  {track.trackId} ({track.points.length} points)
+                </option>
+              ))}
+            </select>
+            <br />
+            <button
+              onClick={async () => {
+                const trackId = (document.getElementById('correlate-track-select') as HTMLSelectElement)?.value;
+                const track = tracks.tracks.find((t) => t.trackId === trackId);
+                
+                if (!track || track.points.length === 0) {
+                  alert('No track selected or track has no points');
+                  return;
+                }
+
+                try {
+                  // Get a sample point from the track
+                  const samplePoint = track.points[Math.floor(track.points.length / 2)];
+                  
+                  // Fetch wind data
+                  const windResult = await fetchWindDataForAltitude(
+                    samplePoint.latitude,
+                    samplePoint.longitude,
+                    samplePoint.altitudeKm
+                  );
+
+                  if (windResult.success && windResult.data) {
+                    const correlations = correlateWindWithTrack(track, windResult.data);
+                    const withWind = correlations.filter((c) => c.windAvailable).length;
+                    const withoutWind = correlations.filter((c) => !c.windAvailable).length;
+                    
+                    const message = `Wind Correlation for ${trackId}:\n\n` +
+                      `Total Points: ${correlations.length}\n` +
+                      `Points with Wind Data: ${withWind}\n` +
+                      `Points without Wind Data: ${withoutWind}\n\n` +
+                      `Check console for detailed correlation data.`;
+                    
+                    alert(message);
+                    console.log('Wind Correlations:', correlations);
+                    console.log('Sample correlations:', correlations.slice(0, 5));
+                  } else {
+                    alert(`Failed to fetch wind data: ${windResult.error || 'Unknown error'}`);
+                  }
+                } catch (err) {
+                  const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+                  alert(`Error: ${errorMessage}`);
+                  console.error('Correlation error:', err);
+                }
+              }}
+              style={{ padding: '8px 16px', cursor: 'pointer' }}
+            >
+              Correlate Wind Data
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
