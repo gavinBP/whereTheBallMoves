@@ -120,30 +120,30 @@ Update the file after completing each sub-task, not just after completing an ent
   - [x] 3.14 Write unit tests for nowcast prediction logic
 
 - [ ] 4.0 Map visualization and user interface
-  - [ ] 4.1 Set up map library and create base MapView component (`src/components/Map/MapView.tsx`)
-  - [ ] 4.2 Configure map with world view, appropriate zoom level, and lat/lon grid overlay
-  - [ ] 4.3 Create TrackLayer component to render balloon tracks as colored paths
-  - [ ] 4.4 Implement altitude-based color encoding (blue → green → yellow → red gradient)
-  - [ ] 4.5 Create MarkerLayer component to render current balloon positions as markers
-  - [ ] 4.6 Style markers to indicate altitude (size or visual style)
-  - [ ] 4.7 Create WindLayer component to render wind vectors/arrows
-  - [ ] 4.8 Implement wind vector visualization with direction and speed indication
-  - [ ] 4.9 Create BalloonSelector dropdown component (`src/components/Controls/BalloonSelector.tsx`)
-  - [ ] 4.10 Populate dropdown with "All Balloons" option and individual track IDs
-  - [ ] 4.11 Create TimeSelector component (`src/components/Controls/TimeSelector.tsx`)
-  - [ ] 4.12 Populate time selector with "Full 24h History" and hourly options ("Now", "1h ago", etc.)
-  - [ ] 4.13 Implement track filtering logic based on selected balloon
-  - [ ] 4.14 Implement time filtering logic (show full path or snapshot at selected time)
-  - [ ] 4.15 Create DetailsPanel component (`src/components/DetailsPanel/DetailsPanel.tsx`)
-  - [ ] 4.16 Display current position (lat, lon), altitude, wind speed/direction in details panel
-  - [ ] 4.17 Calculate and display track statistics: distance traveled, average speed, altitude range
-  - [ ] 4.18 Add wind layer transition detection and display count
-  - [ ] 4.19 Implement click/hover interactions on tracks and markers to show details
-  - [ ] 4.20 Create main App component layout with map, controls, and details panel
-  - [ ] 4.21 Style components with appropriate colors, spacing, and professional appearance
-  - [ ] 4.22 Add smooth transitions when switching between views
-  - [ ] 4.23 Implement nowcast visualization (predicted positions with uncertainty indicators)
-  - [ ] 4.24 Write unit tests for key UI components
+  - [x] 4.1 Set up map library and create base MapView component (`src/components/Map/MapView.tsx`)
+  - [x] 4.2 Configure map with world view, appropriate zoom level, and lat/lon grid overlay
+  - [x] 4.3 Create TrackLayer component to render balloon tracks as colored paths
+  - [x] 4.4 Implement altitude-based color encoding (blue → green → yellow → red gradient)
+  - [x] 4.5 Create MarkerLayer component to render current balloon positions as markers
+  - [x] 4.6 Style markers to indicate altitude (size or visual style)
+  - [x] 4.7 Create WindLayer component to render wind vectors/arrows
+  - [x] 4.8 Implement wind vector visualization with direction and speed indication
+  - [x] 4.9 Create BalloonSelector dropdown component (`src/components/Controls/BalloonSelector.tsx`)
+  - [x] 4.10 Populate dropdown with "All Balloons" option and individual track IDs
+  - [x] 4.11 Create TimeSelector component (`src/components/Controls/TimeSelector.tsx`)
+  - [x] 4.12 Populate time selector with "Full 24h History" and hourly options ("Now", "1h ago", etc.)
+  - [x] 4.13 Implement track filtering logic based on selected balloon
+  - [x] 4.14 Implement time filtering logic (show full path or snapshot at selected time)
+  - [x] 4.15 Create DetailsPanel component (`src/components/DetailsPanel/DetailsPanel.tsx`)
+  - [x] 4.16 Display current position (lat, lon), altitude, wind speed/direction in details panel
+  - [x] 4.17 Calculate and display track statistics: distance traveled, average speed, altitude range
+  - [x] 4.18 Add wind layer transition detection and display count
+  - [x] 4.19 Implement click/hover interactions on tracks and markers to show details
+  - [x] 4.20 Create main App component layout with map, controls, and details panel
+  - [x] 4.21 Style components with appropriate colors, spacing, and professional appearance
+  - [x] 4.22 Add smooth transitions when switching between views
+  - [x] 4.23 Implement nowcast visualization (predicted positions with uncertainty indicators)
+  - [x] 4.24 Write unit tests for key UI components
 
 - [ ] 5.0 Refresh functionality and error handling
   - [ ] 5.1 Create custom hook for throttling (`src/hooks/useThrottle.ts`)
