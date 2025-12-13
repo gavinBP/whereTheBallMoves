@@ -146,26 +146,26 @@ Update the file after completing each sub-task, not just after completing an ent
   - [x] 4.24 Write unit tests for key UI components
 
 - [ ] 5.0 Refresh functionality and error handling
-  - [ ] 5.1 Create custom hook for throttling (`src/hooks/useThrottle.ts`)
-  - [ ] 5.2 Create custom hook for debouncing (`src/hooks/useDebounce.ts`)
-  - [ ] 5.3 Create custom hook for auto-refresh (`src/hooks/useAutoRefresh.ts`)
-  - [ ] 5.4 Implement auto-refresh timer (5-10 minute interval)
-  - [ ] 5.5 Create RefreshButton component (`src/components/Controls/RefreshButton.tsx`)
-  - [ ] 5.6 Implement manual refresh functionality with throttling (30 second minimum)
-  - [ ] 5.7 Add debouncing to refresh button to handle rapid clicks
-  - [ ] 5.8 Create LoadingSpinner component (`src/components/Loading/LoadingSpinner.tsx`)
-  - [ ] 5.9 Implement loading states during data fetching operations
-  - [ ] 5.10 Create error tracking system to record data quality issues
-  - [ ] 5.11 Track which data files failed to load
-  - [ ] 5.12 Track which balloons have incomplete tracks
-  - [ ] 5.13 Track API errors and rate limiting issues
-  - [ ] 5.14 Create ErrorReport component (`src/components/ErrorReport/ErrorReport.tsx`)
-  - [ ] 5.15 Display error report with failed files, incomplete tracks, API errors, and last successful fetch time
-  - [ ] 5.16 Add visual indicators (badges, icons) for missing/corrupted data in UI
-  - [ ] 5.17 Implement graceful degradation: show partial data when some endpoints fail
-  - [ ] 5.18 Add user-friendly error messages for network failures
-  - [ ] 5.19 Implement retry logic with exponential backoff for transient failures
-  - [ ] 5.20 Write unit tests for refresh functionality and error handling
+  - [x] 5.1 Create custom hook for throttling (`src/hooks/useThrottle.ts`)
+  - [x] 5.2 Create custom hook for debouncing (`src/hooks/useDebounce.ts`)
+  - [x] 5.3 Create custom hook for auto-refresh (`src/hooks/useAutoRefresh.ts`)
+  - [x] 5.4 Implement auto-refresh timer (5-10 minute interval)
+  - [x] 5.5 Create RefreshButton component (`src/components/Controls/RefreshButton.tsx`)
+  - [x] 5.6 Implement manual refresh functionality with throttling (30 second minimum)
+  - [x] 5.7 Add debouncing to refresh button to handle rapid clicks
+  - [x] 5.8 Create LoadingSpinner component (`src/components/Loading/LoadingSpinner.tsx`)
+  - [x] 5.9 Implement loading states during data fetching operations
+  - [x] 5.10 Create error tracking system to record data quality issues
+  - [x] 5.11 Track which data files failed to load
+  - [x] 5.12 Track which balloons have incomplete tracks
+  - [x] 5.13 Track API errors and rate limiting issues
+  - [x] 5.14 Create ErrorReport component (`src/components/ErrorReport/ErrorReport.tsx`)
+  - [x] 5.15 Display error report with failed files, incomplete tracks, API errors, and last successful fetch time
+  - [x] 5.16 Add visual indicators (badges, icons) for missing/corrupted data in UI
+  - [x] 5.17 Implement graceful degradation: show partial data when some endpoints fail
+  - [x] 5.18 Add user-friendly error messages for network failures
+  - [x] 5.19 Implement retry logic with exponential backoff for transient failures
+  - [x] 5.20 Write unit tests for refresh functionality and error handling
 
 - [ ] 6.0 Deployment and finalization
   - [ ] 6.1 Choose deployment platform (Vercel, Netlify, or similar)
