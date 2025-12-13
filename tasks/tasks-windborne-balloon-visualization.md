@@ -67,41 +67,41 @@ Update the file after completing each sub-task, not just after completing an ent
 
 ## Tasks
 
-- [ ] 0.0 Create feature branch
-  - [ ] 0.1 Create and checkout a new branch for this feature (e.g., `git checkout -b feature/windborne-balloon-visualization`)
+- [x] 0.0 Create feature branch
+  - [x] 0.1 Create and checkout a new branch for this feature (e.g., `git checkout -b feature/windborne-balloon-visualization`)
 
-- [ ] 1.0 Project setup and configuration
-  - [ ] 1.1 Initialize React project with TypeScript using Vite or Create React App
-  - [ ] 1.2 Install core dependencies: React, ReactDOM, TypeScript
-  - [ ] 1.3 Install mapping library (Leaflet with @types/leaflet or Mapbox GL JS)
-  - [ ] 1.4 Install HTTP client library (axios or use native fetch)
-  - [ ] 1.5 Install additional utilities: date-fns or moment for time handling
-  - [ ] 1.6 Configure TypeScript with appropriate compiler options
-  - [ ] 1.7 Set up project folder structure (src/components, src/services, src/utils, src/types, src/hooks)
-  - [ ] 1.8 Configure build tool and development server
-  - [ ] 1.9 Set up testing framework (Jest + React Testing Library)
-  - [ ] 1.10 Create initial .gitignore file
-  - [ ] 1.11 Update README.md with project description and setup instructions
+- [x] 1.0 Project setup and configuration
+  - [x] 1.1 Initialize React project with TypeScript using Vite or Create React App
+  - [x] 1.2 Install core dependencies: React, ReactDOM, TypeScript
+  - [x] 1.3 Install mapping library (Leaflet with @types/leaflet or Mapbox GL JS)
+  - [x] 1.4 Install HTTP client library (axios or use native fetch)
+  - [x] 1.5 Install additional utilities: date-fns or moment for time handling
+  - [x] 1.6 Configure TypeScript with appropriate compiler options
+  - [x] 1.7 Set up project folder structure (src/components, src/services, src/utils, src/types, src/hooks)
+  - [x] 1.8 Configure build tool and development server
+  - [x] 1.9 Set up testing framework (Jest + React Testing Library)
+  - [x] 1.10 Create initial .gitignore file
+  - [x] 1.11 Update README.md with project description and setup instructions
 
-- [ ] 2.0 Data ingestion and track reconstruction
-  - [ ] 2.1 Create TypeScript types for balloon position data (`src/types/balloon.ts`)
-  - [ ] 2.2 Create TypeScript types for track data (`src/types/track.ts`)
-  - [ ] 2.3 Create WindBorne API service (`src/services/windborneApi.ts`)
-  - [ ] 2.4 Implement function to fetch single endpoint (e.g., `fetchBalloonData(hour: number)`)
-  - [ ] 2.5 Implement function to fetch all 24 endpoints in parallel with error handling
-  - [ ] 2.6 Add robust JSON parsing with try-catch for corrupted data
-  - [ ] 2.7 Create data validation function to ensure coordinate format is correct
-  - [ ] 2.8 Track which endpoints succeeded/failed for error reporting
-  - [ ] 2.9 Create distance calculation utility (`src/utils/distance.ts`) for great-circle distance
-  - [ ] 2.10 Implement proximity matching algorithm (`src/utils/trackReconstruction.ts`)
-  - [ ] 2.11 Add distance threshold gating (max 300-800 km per hour movement)
-  - [ ] 2.12 Add altitude change threshold (max 3-8 km altitude change per hour)
-  - [ ] 2.13 Implement global assignment logic (greedy matching or Hungarian algorithm) to prevent identity swaps
-  - [ ] 2.14 Handle edge cases: balloons appearing/disappearing, assign new track IDs
-  - [ ] 2.15 Create function to reconstruct complete tracks from matched points
-  - [ ] 2.16 Add track metadata calculation (start time, end time, duration, etc.)
-  - [ ] 2.17 Write unit tests for track reconstruction algorithm
-  - [ ] 2.18 Write unit tests for WindBorne API service
+- [x] 2.0 Data ingestion and track reconstruction
+  - [x] 2.1 Create TypeScript types for balloon position data (`src/types/balloon.ts`)
+  - [x] 2.2 Create TypeScript types for track data (`src/types/track.ts`)
+  - [x] 2.3 Create WindBorne API service (`src/services/windborneApi.ts`)
+  - [x] 2.4 Implement function to fetch single endpoint (e.g., `fetchBalloonData(hour: number)`)
+  - [x] 2.5 Implement function to fetch all 24 endpoints in parallel with error handling
+  - [x] 2.6 Add robust JSON parsing with try-catch for corrupted data
+  - [x] 2.7 Create data validation function to ensure coordinate format is correct
+  - [x] 2.8 Track which endpoints succeeded/failed for error reporting
+  - [x] 2.9 Create distance calculation utility (`src/utils/distance.ts`) for great-circle distance
+  - [x] 2.10 Implement proximity matching algorithm (`src/utils/trackReconstruction.ts`)
+  - [x] 2.11 Add distance threshold gating (max 300-800 km per hour movement)
+  - [x] 2.12 Add altitude change threshold (max 3-8 km altitude change per hour)
+  - [x] 2.13 Implement global assignment logic (greedy matching or Hungarian algorithm) to prevent identity swaps
+  - [x] 2.14 Handle edge cases: balloons appearing/disappearing, assign new track IDs
+  - [x] 2.15 Create function to reconstruct complete tracks from matched points
+  - [x] 2.16 Add track metadata calculation (start time, end time, duration, etc.)
+  - [x] 2.17 Write unit tests for track reconstruction algorithm
+  - [x] 2.18 Write unit tests for WindBorne API service
 
 - [ ] 3.0 Open-Meteo integration and wind data correlation
   - [ ] 3.1 Create TypeScript types for wind data (`src/types/wind.ts`)
