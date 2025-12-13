@@ -168,9 +168,9 @@ Update the file after completing each sub-task, not just after completing an ent
   - [x] 5.20 Write unit tests for refresh functionality and error handling
 
 - [ ] 6.0 Deployment and finalization
-  - [ ] 6.1 Choose deployment platform (Vercel, Netlify, or similar)
-  - [ ] 6.2 Configure deployment settings (build command, output directory, environment variables)
-  - [ ] 6.3 Test build process locally to ensure production build works
+  - [x] 6.1 Choose deployment platform (Vercel, Netlify, or similar)
+  - [x] 6.2 Configure deployment settings (build command, output directory, environment variables)
+  - [x] 6.3 Test build process locally to ensure production build works
   - [ ] 6.4 Deploy application to public URL
   - [ ] 6.5 Verify all functionality works in production environment
   - [ ] 6.6 Test auto-refresh functionality in production
